@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Passwords Seguro</title>
+    <!-- Font Awesome para os ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos Personalizados -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <!-- Preloader de Carregamento -->
+    <div id="preloader">
+        <div class="loader-box">
+            <div class="spinner"></div>
+            <span>A carregar...</span>
+        </div>
+    </div>
+
+    <!-- Fundo de Quadrados Flutuantes -->
+    <div class="squares-container">
+        <div class="squares">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header class="app-header animate-item">
+        <div class="brand">
+            <i class="fas fa-shield-alt brand-icon"></i>
+        </div>
+        <div class="security-badge">
+            <span class="pulse-dot"></span>
+            <span>Exclusivo Client-Side</span>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="app-main">
+        <div class="container animate-item">
+            <h1>Gerador de Passwords</h1>
+
+            <!-- Campo da Password Gerada -->
+            <div class="password-container">
+                <input type="text" id="password" readonly placeholder="Gerando password...">
+                <i class="far fa-clone" id="copy-btn" title="Copiar Password"></i>
+            </div>
+
+            <!-- Painel de Opções -->
+            <div class="options">
+                <div class="option">
+                    <label for="length">Tamanho da Password</label>
+                    <div class="range-container">
+                        <input type="range" id="length" min="6" max="32" value="16">
+                        <span id="length-value">16</span>
+                    </div>
+                </div>
+
+                <div class="option">
+                    <label for="uppercase">Incluir Letras Maiúsculas (A-Z)</label>
+                    <input type="checkbox" id="uppercase" checked>
+                </div>
+
+                <div class="option">
+                    <label for="lowercase">Incluir Letras Minúsculas (a-z)</label>
+                    <input type="checkbox" id="lowercase" checked>
+                </div>
+
+                <div class="option">
+                    <label for="numbers">Incluir Números (0-9)</label>
+                    <input type="checkbox" id="numbers" checked>
+                </div>
+
+                <div class="option">
+                    <label for="symbols">Incluir Símbolos (!@#$)</label>
+                    <input type="checkbox" id="symbols" checked>
+                </div>
+            </div>
+
+            <!-- Botão de Ação -->
+            <button id="generate-btn">
+                <i class="fas fa-key"></i> Gerar Nova Password
+            </button>
+
+            <!-- Indicador de Força -->
+            <div class="strength-container">
+                <p>
+                    <span>Força da Password:</span>
+                    <span id="strength-label">Forte</span>
+                </p>
+                <div class="strength-meter">
+                    <div class="strength-bar"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="app-footer animate-item">
+        <div class="footer-trust-strip">
+            <div class="trust-pill">
+                <i class="fas fa-lock trust-icon"></i>
+                <span>Encriptação <strong>Web Crypto API</strong></span>
+            </div>
+            <div class="trust-pill">
+                <i class="fas fa-user-shield trust-icon"></i>
+                <span>Zero dados enviados para servidor</span>
+            </div>
+        </div>
+        <p class="copyright">&copy; Gerador de Passwords Seguro</p>
+    </footer>
+
+    <!-- Script JavaScript -->
+    <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,568 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap');
+
+:root {
+    --c-glass: #bbbbbc;
+    --c-light: #ffffff;
+    --c-dark: #000000;
+    --c-content: #f5f5f7;
+    --c-secondary: #8e8e93;
+    --c-action: #0a84ff;
+    --c-action-hover: #0071e3;
+    --c-bg: #0b0b0d;
+
+    --glass-reflex-dark: 2;
+    --glass-reflex-light: 0.35;
+    --saturation: 160%;
+
+    --weak-color: #ff453a;
+    --medium-color: #ffd60a;
+    --strong-color: #30d158;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+    min-height: 100vh;
+}
+
+/* --- Fundo Original Estático --- */
+body {
+    background: var(--c-bg);
+    background-image: 
+        radial-gradient(at 10% 0%, color-mix(in srgb, var(--c-action) 14%, transparent) 0px, transparent 40%),
+        radial-gradient(at 90% 100%, color-mix(in srgb, #5e5ce6 14%, transparent) 0px, transparent 40%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--c-content);
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Garante que o conteúdo fica sobreposto aos quadrados animado */
+.app-header,
+.app-main,
+.app-footer {
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Animação dos Quadrados no Fundo --- */
+.squares-container {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.squares-container::before {
+    z-index: 10;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40vh;
+    background-image: linear-gradient(-180deg, var(--c-bg) 0%, transparent 100%);
+}
+
+.squares-container::after {
+    z-index: 10;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20vh;
+    background-image: linear-gradient(0deg, var(--c-bg) 0%, transparent 100%);
+}
+
+.squares {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    overflow: hidden;
+}
+
+.square {
+    animation: squares 9.5s linear infinite;
+    align-self: flex-end;
+    width: 1em;
+    height: 1em;
+    transform: translateY(100%);
+    background: color-mix(in srgb, var(--c-light) 6%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c-light) 8%, transparent);
+    border-radius: 6px;
+    backdrop-filter: blur(2px);
+}
+
+.square:nth-child(2) {
+    height: 1.5em;
+    width: 3em;
+    animation-delay: 1s;
+    animation-duration: 17s;
+    filter: blur(5px);
+}
+
+.square:nth-child(3) {
+    height: 2em;
+    width: 1em;
+    animation-delay: 1.5s;
+    animation-duration: 8s;
+    filter: blur(0px);
+}
+
+.square:nth-child(4) {
+    height: 1em;
+    width: 1.5em;
+    animation-delay: 0.5s;
+    filter: blur(3px);
+    animation-duration: 13s;
+}
+
+.square:nth-child(5) {
+    height: 1.25em;
+    width: 2em;
+    animation-delay: 4s;
+    filter: blur(2px);
+    animation-duration: 11s;
+}
+
+.square:nth-child(6) {
+    height: 2.5em;
+    width: 2em;
+    animation-delay: 2s;
+    filter: blur(1px);
+    animation-duration: 9s;
+}
+
+.square:nth-child(7) {
+    height: 5em;
+    width: 2em;
+    filter: blur(2.5px);
+    animation-duration: 12s;
+}
+
+.square:nth-child(8) {
+    height: 1em;
+    width: 3em;
+    animation-delay: 5s;
+    filter: blur(6px);
+    animation-duration: 18s;
+}
+
+.square:nth-child(9) {
+    height: 1.5em;
+    width: 2em;
+    filter: blur(0.5px);
+    animation-duration: 9s;
+}
+
+.square:nth-child(10) {
+    height: 3em;
+    width: 2.4em;
+    animation-delay: 6s;
+    filter: blur(0.5px);
+    animation-duration: 12s;
+}
+
+@keyframes squares {
+    from {
+        transform: translateY(100%) rotate(-50deg);
+    }
+    to {
+        transform: translateY(calc(-100vh + -100%)) rotate(20deg);
+    }
+}
+
+/* --- Preloader --- */
+#preloader {
+    position: fixed;
+    inset: 0;
+    background: var(--c-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#preloader.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 2.5rem 3rem;
+    border-radius: 24px;
+    background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+    backdrop-filter: blur(20px);
+    border: 1px solid color-mix(in srgb, var(--c-light) 10%, transparent);
+}
+
+.spinner {
+    width: 42px;
+    height: 42px;
+    border: 4px solid color-mix(in srgb, var(--c-light) 15%, transparent);
+    border-top: 4px solid var(--c-action);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.loader-box span {
+    font-size: 1rem;
+    color: var(--c-secondary);
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- Animações de Entrada --- */
+.animate-item {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.loaded .app-header {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: 0.05s;
+}
+
+body.loaded .container {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: 0.2s;
+}
+
+body.loaded .app-footer {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: 0.35s;
+}
+
+/* --- Header --- */
+.app-header {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--c-light) 8%, transparent);
+}
+
+.brand-icon {
+    color: var(--c-action);
+    font-size: 1.75rem;
+}
+
+.security-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--c-content);
+    background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+    padding: 7px 16px;
+    border-radius: 99em;
+    border: 1px solid color-mix(in srgb, var(--c-light) 10%, transparent);
+}
+
+.pulse-dot {
+    width: 9px;
+    height: 9px;
+    background-color: var(--strong-color);
+    border-radius: 50%;
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.7);
+    }
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 8px rgba(48, 209, 88, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(48, 209, 88, 0);
+    }
+}
+
+/* --- Layout Principal --- */
+.app-main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 2.5rem 0;
+}
+
+/* --- Quadrado Principal em Liquid Glass (UI Maior) --- */
+.container {
+    width: 100%;
+    max-width: 480px;
+    padding: 2.2rem 2.4rem;
+    border-radius: 30px;
+    background-color: color-mix(in srgb, var(--c-glass) 7%, transparent);
+    backdrop-filter: blur(18px) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(18px) saturate(var(--saturation));
+    
+    box-shadow: 
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 12%), transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+        0px 24px 48px -12px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 45%), transparent);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--c-content);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+}
+
+/* Display da Password */
+.password-container {
+    margin-bottom: 1.25rem;
+    background-color: color-mix(in srgb, var(--c-glass) 10%, transparent);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    padding: 0.2rem 1.1rem;
+    box-shadow: 
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 8%), transparent),
+        inset 1px 1.5px 0px -1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 50%), transparent),
+        inset -1px -1px 2px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 15%), transparent);
+}
+
+.password-container:focus-within {
+    box-shadow: 
+        inset 0 0 0 1.5px var(--c-action),
+        0 0 14px color-mix(in srgb, var(--c-action) 45%, transparent);
+}
+
+#password {
+    width: 100%;
+    padding: 0.9rem 0;
+    border: none;
+    background: transparent;
+    color: var(--c-content);
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    outline: none;
+}
+
+#copy-btn {
+    cursor: pointer;
+    color: var(--c-secondary);
+    font-size: 1.25rem;
+    padding: 6px;
+    transition: color 160ms, transform 160ms;
+}
+
+#copy-btn:hover {
+    color: var(--c-action);
+    transform: scale(1.12);
+}
+
+/* Painel de Opções */
+.options {
+    margin-bottom: 1.25rem;
+    background-color: color-mix(in srgb, var(--c-glass) 6%, transparent);
+    border-radius: 16px;
+    padding: 0.3rem 0;
+    box-shadow: 
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 6%), transparent),
+        inset 0px 2px 3px -1px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 15%), transparent);
+}
+
+.option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 1.1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--c-light) 4%, transparent);
+}
+
+.option:last-child {
+    border-bottom: none;
+}
+
+label {
+    color: var(--c-content);
+    font-size: 0.95rem;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.range-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+input[type="range"] {
+    accent-color: var(--c-action);
+    cursor: pointer;
+    height: 6px;
+}
+
+#length-value {
+    color: var(--c-action);
+    font-weight: 600;
+    font-size: 0.95rem;
+    min-width: 24px;
+    text-align: right;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--c-action);
+    cursor: pointer;
+}
+
+/* Botão Gerar */
+#generate-btn {
+    width: 100%;
+    background-color: color-mix(in srgb, var(--c-action) 85%, var(--c-light) 15%);
+    color: #ffffff;
+    border: none;
+    padding: 0.95rem;
+    border-radius: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 
+        inset 0 1px 1px 0 color-mix(in srgb, var(--c-light) 40%, transparent),
+        0 6px 20px color-mix(in srgb, var(--c-action) 35%, transparent);
+    transition: all 200ms cubic-bezier(1, 0.0, 0.4, 1);
+    margin-bottom: 1.25rem;
+}
+
+#generate-btn:hover {
+    background-color: var(--c-action);
+    transform: translateY(-2px);
+}
+
+#generate-btn:active {
+    transform: translateY(0);
+}
+
+/* Indicador de Força */
+.strength-container p {
+    font-size: 0.88rem;
+    color: var(--c-secondary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+#strength-label {
+    color: var(--c-content);
+    font-weight: 600;
+}
+
+.strength-meter {
+    height: 7px;
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+    border-radius: 99em;
+    overflow: hidden;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 50%;
+    background-color: var(--medium-color);
+    border-radius: 99em;
+    transition: all 400ms cubic-bezier(1, 0.0, 0.4, 1);
+}
+
+/* --- Footer --- */
+.app-footer {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--c-light) 8%, transparent);
+}
+
+.footer-trust-strip {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.trust-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.75rem 1.1rem;
+    border-radius: 14px;
+    background-color: color-mix(in srgb, var(--c-glass) 6%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c-light) 6%, transparent);
+    font-size: 0.85rem;
+    color: var(--c-secondary);
+    backdrop-filter: blur(8px);
+}
+
+.trust-icon {
+    font-size: 1.05rem;
+    color: var(--c-action);
+    flex-shrink: 0;
+}
+
+.trust-pill strong {
+    color: var(--c-content);
+}
+
+.copyright {
+    font-size: 0.8rem;
+    color: var(--c-secondary);
+    text-align: center;
+}
